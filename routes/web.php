@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Autentikasi\LoginController;
 use App\Http\Controllers\Master\MesinController;
+use App\Http\Controllers\Master\OperatorController;
 use App\Http\Controllers\Modules\AppController;
 use Illuminate\Support\Facades\Route;
 
@@ -18,6 +19,10 @@ Route::middleware(["web", "autentikasi"])->group(function() {
 
         Route::get("/mesin/datatable", [MesinController::class, "datatable"]);
         Route::resource("mesin", MesinController::class);
+
+        Route::patch('/operator/{id}/toggle-status', [OperatorController::class, 'toggleStatus']);
+        Route::get("/operator/datatable", [OperatorController::class, "datatable"]);
+        Route::resource("operator", OperatorController::class);
     });
 
     Route::get("/auth/logout", [LoginController::class, "logout"]);
