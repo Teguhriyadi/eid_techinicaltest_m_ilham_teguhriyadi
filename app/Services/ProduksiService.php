@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Events\ProduksiCreated;
+use App\Models\Mesin;
 use App\Models\ProduksiLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -44,6 +45,13 @@ class ProduksiService
         try {
 
             $produksi = ProduksiLog::create($data);
+
+            $mesin = Mesin::findOrFail($data['mesin_id']);
+
+            $mesin->update([
+                'status' => $data['status'],
+                'temperatur' => $data['temperatur'],
+            ]);
 
             DB::commit();
 
