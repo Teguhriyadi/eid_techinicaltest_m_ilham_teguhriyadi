@@ -49,6 +49,13 @@
         </a>
     </li>
 
+    <li class="nav-item {{ request()->is('pages/laporan-produksi*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/pages/laporan-produksi') }}">
+            <i class="fas fa-fw fa-book"></i>
+            <span>Laporan Produksi</span>
+        </a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 

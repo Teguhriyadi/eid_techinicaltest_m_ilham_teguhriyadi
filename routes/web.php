@@ -5,6 +5,7 @@ use App\Http\Controllers\Master\MesinController;
 use App\Http\Controllers\Master\OperatorController;
 use App\Http\Controllers\Master\ProduksiController;
 use App\Http\Controllers\Modules\AppController;
+use App\Http\Controllers\Report\LaporanProduksiController;
 use Illuminate\Support\Facades\Route;
 
 Route::middleware(["web", "guest"])->group(function() {
@@ -27,6 +28,11 @@ Route::middleware(["web", "autentikasi"])->group(function() {
 
         Route::get("/produksi/datatable", [ProduksiController::class, "datatable"]);
         Route::resource("produksi", ProduksiController::class);
+
+        Route::prefix("laporan-produksi")->group(function() {
+            Route::get("", [LaporanProduksiController::class, "index"]);
+            Route::get("/data", [LaporanProduksiController::class, "data"]);
+        });
     });
 
     Route::get("/auth/logout", [LoginController::class, "logout"]);
