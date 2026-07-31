@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Report;
 use App\Http\Controllers\Controller;
 use App\Models\ProduksiLog;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class LaporanProduksiController extends Controller
 {
@@ -14,8 +15,7 @@ class LaporanProduksiController extends Controller
             'pages.modules.laporan.index'
         );
     }
-
-
+    
     public function data(Request $request)
     {
 
@@ -23,23 +23,43 @@ class LaporanProduksiController extends Controller
             'mesin',
             'operator'
         ])
-        ->when(
-            $request->tanggal,
-            function($q) use($request){
+            ->when(
+                $request->tanggal,
+                function ($q) use ($request) {
 
-                $q->whereDate(
-                    'tanggal_produksi',
-                    $request->tanggal
-                );
+                    $q->whereDate(
+                        'tanggal_produksi',
+                        $request->tanggal
+                    );
+                }
+            )
+            ->latest()
+            ->get();
 
-            }
+
+        $rekapShift = ProduksiLog::select(
+            'shift',
+            DB::raw(
+                'SUM(jumlah_produksi) as total_produksi'
+            )
         )
-        ->latest()
-        ->get();
+            ->when(
+                $request->tanggal,
+                function ($q) use ($request) {
 
+                    $q->whereDate(
+                        'tanggal_produksi',
+                        $request->tanggal
+                    );
+                }
+            )
+            ->groupBy('shift')
+            ->get();
 
         return response()->json([
-            'data'=>$produksi
+            'data' => $produksi,
+            'rekap_shift' => $rekapShift
+
         ]);
     }
 }
