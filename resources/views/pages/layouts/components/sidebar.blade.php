@@ -35,6 +35,13 @@
         </a>
     </li>
 
+    <li class="nav-item {{ request()->is('pages/operator*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/pages/operator') }}">
+            <i class="fas fa-fw fa-users"></i>
+            <span>Operator</span>
+        </a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
