@@ -9,7 +9,9 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>SB Admin 2 - Dashboard</title>
+    <title>
+        {{ config('app.name') }} - @stack("title-modules")
+    </title>
 
     @include("pages.layouts.css.style_css")
 

@@ -1,5 +1,7 @@
 @extends('pages.layouts.master')
 
+@push("title-modules", "Dashboard App")
+
 @push("title", "Dashboard")
 
 @push('content-modules')
