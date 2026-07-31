@@ -55,6 +55,15 @@
 @endpush
 
 @push('content-modules')
+    @if (session('error'))
+        <div class="alert alert-danger">
+            <strong>Gagal,</strong> {{ session('error') }}
+        </div>
+    @elseif(session('success'))
+        <div class="alert alert-success">
+            <strong>Berhasil,</strong> {{ session('success') }}
+        </div>
+    @endif
     <div class="row">
 
         <div class="col-lg-3 col-md-6 mb-4">
@@ -92,40 +101,22 @@
                 </div>
             </div>
         </div>
-
     </div>
-
-
     <div class="row">
-
         <div class="col-lg-8">
-
             <div class="card shadow">
-
                 <div class="card-header">
-
                     <strong>Grafik Produksi per Jam</strong>
-
                 </div>
-
                 <div class="card-body chart-container">
-
                     <canvas id="chartProduksi"></canvas>
-
                 </div>
-
             </div>
-
         </div>
-
         <div class="col-lg-4">
-
             <div class="card shadow">
-
                 <div class="card-header d-flex justify-content-between align-items-center">
-
                     <strong>Monitoring Mesin</strong>
-
                     <div>
 
                         <button class="btn btn-sm btn-outline-secondary" id="btnPrev">
@@ -133,37 +124,22 @@
                         </button>
 
                         <span class="mx-2 font-weight-bold" id="pageInfo">1 / 1</span>
-
                         <button class="btn btn-sm btn-outline-secondary" id="btnNext">
                             <i class="fa fa-chevron-right"></i>
                         </button>
-
                     </div>
-
                 </div>
-
                 <div class="card-body p-0">
-
                     <table class="table table-hover mb-0">
-
                         <thead class="thead-light">
-
                             <tr>
-
                                 <th>Mesin</th>
-
                                 <th>Status</th>
-
                                 <th>Suhu</th>
-
                                 <th>Operator</th>
-
                             </tr>
-
                         </thead>
-
                         <tbody id="monitoring-table"></tbody>
-
                     </table>
 
                 </div>
@@ -298,32 +274,32 @@
 
         function refreshDashboard() {
 
-    $.get('/pages/dashboard/statistik')
-        .done(function(r) {
+            $.get('/pages/dashboard/statistik')
+                .done(function(r) {
 
-            console.log("DATA DASHBOARD BARU:", r);
+                    console.log("DATA DASHBOARD BARU:", r);
 
-            $('#total_mesin').text(r.total_mesin);
-            $('#running').text(r.running);
-            $('#produksi').text(r.total_produksi);
-            $('#operator').text(r.operator_aktif);
+                    $('#total_mesin').text(r.total_mesin);
+                    $('#running').text(r.running);
+                    $('#produksi').text(r.total_produksi);
+                    $('#operator').text(r.operator_aktif);
 
-            chart.data.labels = r.chart.labels;
-            chart.data.datasets[0].data = r.chart.data;
-            chart.update();
+                    chart.data.labels = r.chart.labels;
+                    chart.data.datasets[0].data = r.chart.data;
+                    chart.update();
 
-            monitoringData = r.monitoring;
+                    monitoringData = r.monitoring;
 
-            renderMonitoring();
+                    renderMonitoring();
 
-        })
-        .fail(function(xhr) {
+                })
+                .fail(function(xhr) {
 
-            console.log("STATISTIK ERROR", xhr.responseText);
+                    console.log("STATISTIK ERROR", xhr.responseText);
 
-        });
+                });
 
-}
+        }
 
         // Load pertama
         refreshDashboard();

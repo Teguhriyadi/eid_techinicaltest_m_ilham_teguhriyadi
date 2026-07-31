@@ -8,6 +8,10 @@ use App\Http\Controllers\Modules\AppController;
 use App\Http\Controllers\Report\LaporanProduksiController;
 use Illuminate\Support\Facades\Route;
 
+Route::get("/", function() {
+    return redirect()->to("/auth/login");
+});
+
 Route::middleware(["web", "guest"])->group(function() {
     Route::prefix("auth")->group(function() {
         Route::get("/login", [LoginController::class, "login"]);
