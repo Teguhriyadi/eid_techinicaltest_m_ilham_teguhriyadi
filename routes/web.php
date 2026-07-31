@@ -17,7 +17,7 @@ Route::middleware(["web", "guest"])->group(function() {
 Route::middleware(["web", "autentikasi"])->group(function() {
     Route::prefix("pages")->group(function() {
         Route::get("/dashboard", [AppController::class, "dashboard"]); 
-
+        Route::get("/dashboard/statistik", [AppController::class, "statistik"]);
         Route::get("/mesin/datatable", [MesinController::class, "datatable"]);
         Route::resource("mesin", MesinController::class);
 

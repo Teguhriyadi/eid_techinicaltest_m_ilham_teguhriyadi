@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Events\ProduksiCreated;
 use App\Models\ProduksiLog;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
@@ -42,9 +43,11 @@ class ProduksiService
 
         try {
 
-            ProduksiLog::create($data);
+            $produksi = ProduksiLog::create($data);
 
             DB::commit();
+
+            event(new ProduksiCreated($produksi));
         } catch (\Throwable $th) {
 
             DB::rollBack();
