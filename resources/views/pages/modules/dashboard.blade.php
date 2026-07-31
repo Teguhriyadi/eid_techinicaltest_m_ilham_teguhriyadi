@@ -5,6 +5,17 @@
 @push("title", "Dashboard")
 
 @push('content-modules')
+
+    @if (session("error"))
+        <div class="alert alert-danger">
+            <strong>Gagal,</strong> {{ session('error') }}
+        </div>
+    @elseif(session("success"))
+        <div class="alert alert-success">
+            <strong>Berhasil,</strong> {{ session('success') }}
+        </div>
+    @endif
+    
     <div class="row">
 
         <!-- Earnings (Monthly) Card Example -->
