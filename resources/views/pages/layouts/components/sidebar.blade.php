@@ -42,6 +42,13 @@
         </a>
     </li>
 
+    <li class="nav-item {{ request()->is('pages/produksi*') ? 'active' : '' }}">
+        <a class="nav-link" href="{{ url('/pages/produksi') }}">
+            <i class="fas fa-fw fa-industry"></i>
+            <span>Produksi</span>
+        </a>
+    </li>
+
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">
 
